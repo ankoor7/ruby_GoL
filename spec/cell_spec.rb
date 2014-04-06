@@ -14,12 +14,12 @@ describe "game of life" do
   end
 
   context "neighbourhoods" do
-    subject { Neighbourhood.new resident: "me", population: ["me", "you"] }
+    subject { Neighbourhood.new resident: "me" }
 
     it "has the resident and population" do
       @neighbourhood = subject
       @neighbourhood.resident.should == "me"
-      @neighbourhood.population.should == ["me", "you"]
+      @neighbourhood.population.should == []
     end
   end
 
@@ -39,8 +39,15 @@ describe "game of life" do
         end
       end
     end
-  end
 
+    it "has a neighbourhood for each citizen" do
+      @world.cells.each do |cell|
+        expect(@world.neighbourhoods.any? { |neighbourhood|
+          neighbourhood.resident == cell
+        }).to be true
+      end
+    end
+  end
 
 end
 
